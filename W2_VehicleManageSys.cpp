@@ -88,8 +88,8 @@ public:
     void setPurchaseMonth(PurchaseMonth pm) { purchaseMonth = pm; }
     void setEngineSize(double es) { engineSize = es; }
 
-    // Helper methods to convert enums to strings
-    string colorToString() const
+    // Static helper methods to convert enums to strings
+    static string colorToString(Color color)
     {
         switch (color)
         {
@@ -108,7 +108,7 @@ public:
         }
     }
 
-    string monthToString() const
+    static string monthToString(PurchaseMonth purchaseMonth)
     {
         switch (purchaseMonth)
         {
@@ -147,10 +147,10 @@ public:
         cout << "Maker: " << maker
              << " | Model: " << model
              << " | Year: " << year
-             << " | Color: " << colorToString()
+             << " | Color: " << colorToString(color)
              << " | Weight: " << weight
              << " | VIN: " << vin
-             << " | Purchase Month: " << monthToString()
+             << " | Purchase Month: " << monthToString(purchaseMonth)
              << " | Engine: " << engineSize << "L"
              << endl;
     }
