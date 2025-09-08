@@ -1,3 +1,5 @@
+// Vehicle Management System
+// This program manages a list of vehicles, allowing the user to add, display, and sort them.
 #include <iostream>
 #include <string>
 #include <algorithm>
@@ -9,10 +11,10 @@ const int EXIT_CHOICE = 4;
 
 using namespace std;
 
-// Typedef
+// Typedef for Vehicle Identification Number
 typedef char VIN[20];
 
-// Enumeration
+// Enumeration for vehicle color
 enum Color
 {
     RED,
@@ -21,6 +23,7 @@ enum Color
     BLACK,
     WHITE
 };
+// Enumeration for purchase month
 enum PurchaseMonth
 {
     JAN = 1,
@@ -37,17 +40,18 @@ enum PurchaseMonth
     DEC
 };
 
+// Vehicle class definition
 class Vehicle
 {
 private:
-    string maker;
-    string model;
-    int year;
-    Color color;
-    double weight;
-    VIN vin;
-    PurchaseMonth purchaseMonth;
-    double engineSize; // NEW ATTRIBUTE
+    string maker;                // Manufacturer
+    string model;                // Model name
+    int year;                    // Year of manufacture
+    Color color;                 // Color of vehicle
+    double weight;               // Weight of vehicle
+    VIN vin;                     // Vehicle Identification Number
+    PurchaseMonth purchaseMonth; // Month of purchase
+    double engineSize;           // Engine size in liters
 
 public:
     // Constructor
@@ -141,7 +145,7 @@ public:
         }
     }
 
-    // Display
+    // Display vehicle details
     void display() const
     {
         cout << "Maker: " << maker
@@ -156,7 +160,7 @@ public:
     }
 };
 
-// Sorting comparators
+// Sorting comparators for different attributes
 bool compareByMaker(const Vehicle *a, const Vehicle *b)
 {
     return a->getMaker() < b->getMaker();
@@ -177,7 +181,7 @@ bool compareByColor(const Vehicle *a, const Vehicle *b)
     return a->getColor() < b->getColor();
 }
 
-// Function to get a valid integer input
+// Function to get a valid integer input from user
 int getValidInt(const string &prompt)
 {
     int value;
@@ -192,7 +196,7 @@ int getValidInt(const string &prompt)
     return value;
 }
 
-// Function to get a valid double input
+// Function to get a valid double input from user
 double getValidDouble(const string &prompt)
 {
     double value;
@@ -207,11 +211,13 @@ double getValidDouble(const string &prompt)
     return value;
 }
 
+// Clears the input buffer after reading input
 void clearInputBuffer()
 {
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
+// Function to add a new vehicle to the list
 void addNewVehicle(vector<Vehicle *> &vehicles)
 {
     string maker, model;
@@ -242,13 +248,14 @@ void addNewVehicle(vector<Vehicle *> &vehicles)
 
 int main()
 {
-    vector<Vehicle *> vehicles;
+    vector<Vehicle *> vehicles; // List of vehicle pointers
     int n;
 
     cout << "Enter number of vehicles to create initially: ";
     cin >> n;
     clearInputBuffer();
 
+    // Initial vehicle entry
     for (int i = 0; i < n; ++i)
     {
         cout << "\n--- Enter Vehicle " << i + 1 << " ---";
@@ -258,6 +265,7 @@ int main()
     int choice = 0;
     do
     {
+        // Main menu
         cout << "\n--- Vehicle Management System ---\n";
         cout << "1. Display all vehicles\n";
         cout << "2. Sort vehicles\n";
@@ -270,6 +278,7 @@ int main()
         switch (choice)
         {
         case 1:
+            // Display all vehicles
             cout << "\n--- All Vehicles ---\n";
             for (const auto &v : vehicles)
             {
@@ -277,6 +286,7 @@ int main()
             }
             break;
         case 2:
+            // Sorting menu
             char sortChoice;
             cout << "\nSort by:\n";
             cout << " (m)aker, (y)ear, (w)eight, (c)olor: ";
@@ -315,6 +325,7 @@ int main()
             }
             break;
         case 3:
+            // Add a new vehicle
             addNewVehicle(vehicles);
             break;
         case EXIT_CHOICE:
@@ -325,7 +336,7 @@ int main()
         }
     } while (choice != EXIT_CHOICE);
 
-    // Cleanup
+    // Cleanup: delete all vehicle objects
     for (Vehicle *v : vehicles)
     {
         delete v;
